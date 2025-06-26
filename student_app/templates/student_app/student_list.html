@@ -1,0 +1,28 @@
+<h2>Students List</h2>
+
+<!-- Course Filter Dropdown -->
+<form method="get">
+    <label for="course">Filter by Course:</label>
+    <select name="course" id="course" onchange="this.form.submit()">
+        <option value="">All Courses</option>
+        {% for course in courses %}
+            <option value="{{ course.id }}" {% if selected_course == course.id %}selected{% endif %}>
+                {{ course.name }}
+            </option>
+        {% endfor %}
+    </select>
+</form>
+
+<a href="{% url 'add_student' %}">Add Student</a>
+
+<ul>
+    {% for student in students %}
+        <li>
+            {{ student.name }} ({{ student.course.name }})
+            — <a href="{% url 'edit_student' student.pk %}">Edit</a>
+            — <a href="{% url 'delete_student' student.pk %}">Delete</a>
+        </li>
+    {% empty %}
+        <li>No students found.</li>
+    {% endfor %}
+</ul>
